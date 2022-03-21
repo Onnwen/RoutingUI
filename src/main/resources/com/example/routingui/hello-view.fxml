@@ -1,65 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="739.0" prefWidth="413.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.routingui.HelloController">
+<VBox alignment="CENTER" prefHeight="750.0" prefWidth="1150.0" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.routingui.HelloController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
-   <Accordion>
-     <panes>
-       <TitledPane animated="false" text="Reti">
-            <content>
-               <VBox prefHeight="236.0" prefWidth="373.0">
-                  <children>
-                     <Label text="Seleziona una rete" />
-                     <ListView fx:id="networksListView" onMouseClicked="#updateNetworkDevicesList" prefHeight="200.0" prefWidth="200.0" />
-                  </children>
-               </VBox>
-            </content>
-         </TitledPane>
-     </panes>
-   </Accordion>
-   <Accordion>
-     <panes>
-       <TitledPane animated="false" text="Dispositivi">
-            <content>
-               <VBox prefHeight="389.0" prefWidth="373.0">
-                  <children>
-                     <Label fx:id="networkName" text="Dispositivi della rete selezionata" />
-                     <ListView fx:id="networkDevicesListView" onEditCommit="#updateNetworkDevicesList" prefHeight="285.0" prefWidth="373.0" />
-                  </children>
-               </VBox>
-            </content>
-         </TitledPane>
-     </panes>
-   </Accordion>
-   <VBox alignment="TOP_CENTER" prefHeight="319.0" prefWidth="373.0">
+   <GridPane hgap="10.0" prefHeight="300.0" prefWidth="855.0">
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="66.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
       <children>
-         <HBox alignment="CENTER" prefHeight="36.0" prefWidth="373.0">
+         <VBox prefHeight="100.0" prefWidth="471.0">
             <children>
-               <ComboBox fx:id="startingDevice" prefHeight="25.0" prefWidth="322.0" promptText="Partenza" />
-               <Label prefHeight="17.0" prefWidth="146.0" />
-               <ComboBox fx:id="endingDevice" prefHeight="25.0" prefWidth="313.0" promptText="Arrivo" />
+               <Label text="Reti">
+                  <VBox.margin>
+                     <Insets bottom="2.0" />
+                  </VBox.margin>
+               </Label>
+               <ListView fx:id="networksListView" onMouseClicked="#updateNetworkDevicesList" prefHeight="83.0" prefWidth="147.0" VBox.vgrow="ALWAYS" />
             </children>
-         </HBox>
-         <Label prefHeight="0.0" prefWidth="146.0" />
-         <ListView prefHeight="295.0" prefWidth="373.0" />
-         <Label fx:id="textMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="387.0" textAlignment="RIGHT" textFill="RED" />
-       <Button alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#estimateRoute" prefWidth="607.0" text="Calcola percorso">
-            <font>
-               <Font name="System Bold" size="13.0" />
-            </font>
-         </Button>
+         </VBox>
+         <VBox prefHeight="389.0" prefWidth="373.0" GridPane.columnIndex="1">
+            <children>
+               <Label fx:id="networkName" text="Dispositivi della rete selezionata">
+                  <VBox.margin>
+                     <Insets bottom="2.0" />
+                  </VBox.margin>
+               </Label>
+               <ListView fx:id="networkDevicesListView" onEditCommit="#updateNetworkDevicesList" VBox.vgrow="ALWAYS" />
+            </children>
+         </VBox>
       </children>
-   </VBox>
+   </GridPane>
+   <GridPane hgap="10.0" prefHeight="68.0" prefWidth="849.0" vgap="5.0">
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+       <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
+      <children>
+         <ComboBox fx:id="startingDevice" prefHeight="31.0" prefWidth="398.0" promptText="Partenza" />
+         <ComboBox fx:id="endingDevice" prefHeight="30.0" prefWidth="485.0" promptText="Arrivo" GridPane.rowIndex="1" />
+         <CheckBox disable="true" mnemonicParsing="false" text="Previlegia costo minore" GridPane.columnIndex="1" />
+         <Slider disable="true" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+         <Label disable="true" text="Salti massimi: 100" GridPane.columnIndex="2" />
+         <TextField disable="true" promptText="Costo considerato per ogni salto facoltativo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      </children>
+   </GridPane>
+ <Button fx:id="estimateRouteButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#estimateRoute" prefHeight="40.0" prefWidth="1164.0" text="Calcola percorso">
+      <font>
+         <Font name="System Bold" size="13.0" />
+      </font>
+   </Button>
+   <GridPane hgap="10.0" prefHeight="248.0" prefWidth="859.0">
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
+      <children>
+         <VBox prefHeight="181.0" prefWidth="451.0">
+            <children>
+               <Label text="Percorsi trovati">
+                  <VBox.margin>
+                     <Insets bottom="2.0" />
+                  </VBox.margin>
+               </Label>
+               <ListView fx:id="foundRoutesListView" onMouseClicked="#updateFoundRoutesList" prefHeight="251.0" prefWidth="279.0">
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin>
+               </ListView>
+            </children>
+         </VBox>
+         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+            <children>
+               <Label text="Percorso">
+                  <VBox.margin>
+                     <Insets bottom="2.0" />
+                  </VBox.margin>
+               </Label>
+               <ListView fx:id="routeView" prefHeight="279.0" prefWidth="566.0">
+                  <VBox.margin>
+                     <Insets bottom="5.0" />
+                  </VBox.margin>
+               </ListView>
+               <HBox prefHeight="19.0" prefWidth="566.0" spacing="20.0">
+                  <children>
+                     <Label fx:id="totalCost" text="Costo totale: -">
+                        <HBox.margin>
+                           <Insets />
+                        </HBox.margin>
+                     </Label>
+                     <Label fx:id="totalHops" text="Salti totali: -" />
+                     <Label fx:id="totalAttemps" text="Tentativi effettuati: -" />
+                     <Label fx:id="calculationTime" text="Tempo di calcolo: -" />
+                  </children>
+               </HBox>
+               <VBox prefHeight="51.0" prefWidth="566.0" />
+            </children>
+         </VBox>
+      </children>
+   </GridPane>
 </VBox>

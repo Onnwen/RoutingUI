@@ -33,10 +33,10 @@ public class Route {
 
     public String getStringCost() {
         if (cost == 0) {
-            return "0 \uDBC0\uDF6F";
+            return "0";
         }
         else {
-            return cost + " \uDBC0\uDF70";
+            return cost + "";
         }
     }
 

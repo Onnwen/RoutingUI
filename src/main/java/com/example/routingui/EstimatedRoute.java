@@ -136,6 +136,10 @@ public class EstimatedRoute {
         return getLastDevice().sameAs(arrivingDevice);
     }
 
+    public int getAttempt() {
+        return attempt;
+    }
+
     public void print() {
         if (!validRoute()) {
             System.out.println("\uDBC0\uDD84\tNessun percorso trovato.");

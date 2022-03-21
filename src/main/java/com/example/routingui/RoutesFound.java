@@ -17,6 +17,10 @@ public class RoutesFound {
         this.calculationTime = 0;
     }
 
+    public double getCalculationTime() {
+        return calculationTime/1000;
+    }
+
     public void setCalculationTime(double calculationTime) {
         this.calculationTime = calculationTime;
     }
@@ -56,6 +60,53 @@ public class RoutesFound {
             }
         }
         return bestRoute;
+    }
+
+    public boolean firstIsBest() {
+        return (getMinorCostRoute() == routes[0] || getMinorCostRoute().getHops() == routes[0].getHops());
+    }
+
+    public EstimatedRoute[] getSortedRoutes() {
+        EstimatedRoute[] sortedRoutes = new EstimatedRoute[total];
+        int totalSortedRoutes = 0;
+
+        if (getMinorCostRoute() == routes[0] || getMinorCostRoute().getHops() == routes[0].getHops()) {
+            sortedRoutes[0]  = routes[0];
+            totalSortedRoutes++;
+        }
+        else {
+            sortedRoutes[0] = routes[0];
+            sortedRoutes[1] = getMinorCostRoute();
+        }
+
+        for(int i=1; i<total; i++) {
+            if (routes[i] != getMinorCostRoute()) {
+                sortedRoutes[totalSortedRoutes] = routes[i];
+                totalSortedRoutes++;
+            }
+        }
+
+        for(int i=1; i<totalSortedRoutes; i++) {
+            try {
+                if (sortedRoutes[i].getHops() > sortedRoutes[i + 1].getHops()) {
+                    EstimatedRoute temp = sortedRoutes[i];
+                    sortedRoutes[i] = sortedRoutes[i + 1];
+                    sortedRoutes[i + 1] = temp;
+                }
+            } catch (Exception e) {}
+        }
+
+        for(int i=1; i<totalSortedRoutes; i++) {
+            try {
+                if (sortedRoutes[i].getCost() > sortedRoutes[i + 1].getCost()) {
+                    EstimatedRoute temp = sortedRoutes[i];
+                    sortedRoutes[i] = sortedRoutes[i + 1];
+                    sortedRoutes[i + 1] = temp;
+                }
+            } catch (Exception e) {}
+        }
+
+        return Arrays.copyOf(sortedRoutes, totalSortedRoutes);
     }
 
     public void print() {
