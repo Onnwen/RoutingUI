@@ -9,6 +9,7 @@ module com.example.routingui {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires junit;
 
     opens com.example.routingui to javafx.fxml;
     exports com.example.routingui;

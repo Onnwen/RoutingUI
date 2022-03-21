@@ -1,36 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="304.0" prefWidth="413.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.routingui.HelloController">
+<VBox alignment="CENTER" prefHeight="739.0" prefWidth="413.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.routingui.HelloController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
-   <VBox prefHeight="200.0" prefWidth="100.0">
+   <Accordion>
+     <panes>
+       <TitledPane animated="false" text="Reti">
+            <content>
+               <VBox prefHeight="236.0" prefWidth="373.0">
+                  <children>
+                     <Label text="Seleziona una rete" />
+                     <ListView fx:id="networksListView" onMouseClicked="#updateNetworkDevicesList" prefHeight="200.0" prefWidth="200.0" />
+                  </children>
+               </VBox>
+            </content>
+         </TitledPane>
+     </panes>
+   </Accordion>
+   <Accordion>
+     <panes>
+       <TitledPane animated="false" text="Dispositivi">
+            <content>
+               <VBox prefHeight="389.0" prefWidth="373.0">
+                  <children>
+                     <Label fx:id="networkName" text="Dispositivi della rete selezionata" />
+                     <ListView fx:id="networkDevicesListView" onEditCommit="#updateNetworkDevicesList" prefHeight="285.0" prefWidth="373.0" />
+                  </children>
+               </VBox>
+            </content>
+         </TitledPane>
+     </panes>
+   </Accordion>
+   <VBox alignment="TOP_CENTER" prefHeight="319.0" prefWidth="373.0">
       <children>
-         <Label text="Seleziona una rete" />
-         <ListView fx:id="networksListView" prefHeight="200.0" prefWidth="200.0" />
+         <HBox alignment="CENTER" prefHeight="36.0" prefWidth="373.0">
+            <children>
+               <ComboBox fx:id="startingDevice" prefHeight="25.0" prefWidth="322.0" promptText="Partenza" />
+               <Label prefHeight="17.0" prefWidth="146.0" />
+               <ComboBox fx:id="endingDevice" prefHeight="25.0" prefWidth="313.0" promptText="Arrivo" />
+            </children>
+         </HBox>
+         <Label prefHeight="0.0" prefWidth="146.0" />
+         <ListView prefHeight="295.0" prefWidth="373.0" />
+         <Label fx:id="textMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="387.0" textAlignment="RIGHT" textFill="RED" />
+       <Button alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#estimateRoute" prefWidth="607.0" text="Calcola percorso">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </Button>
       </children>
    </VBox>
-   <VBox prefHeight="200.0" prefWidth="100.0">
-      <children>
-         <Label text="Dispositivi della rete selezionata" />
-         <ListView prefHeight="200.0" prefWidth="200.0" />
-         <CheckBox mnemonicParsing="false" text="Mostra collegamenti" />
-      </children>
-   </VBox>
-   <ButtonBar prefHeight="40.0" prefWidth="200.0">
-     <buttons>
-         <ChoiceBox prefWidth="150.0" />
-         <ChoiceBox prefWidth="150.0" />
-       <Button mnemonicParsing="false" text="Stima percorso" />
-     </buttons>
-   </ButtonBar>
 </VBox>
