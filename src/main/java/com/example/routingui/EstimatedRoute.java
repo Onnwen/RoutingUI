@@ -11,12 +11,12 @@ public class EstimatedRoute {
     private final int authorizedMaximumHops;
     private int attempt;
 
-    public EstimatedRoute(Device sendingDevice, Device arrivingDevice, Network net, Route[] routesToAvoid) {
+    public EstimatedRoute(Device sendingDevice, Device arrivingDevice, Network net, Route[] routesToAvoid, int authorizedMaximumHops) {
         this.startingPoint = sendingDevice.copy();
         this.arrivingDevice = arrivingDevice;
         this.maximumHops = 0;
         this.maximumCost = 0;
-        this.authorizedMaximumHops = 100;
+        this.authorizedMaximumHops = authorizedMaximumHops;
         this.attempt = 1;
         this.cost = 0;
         this.hops = 0;

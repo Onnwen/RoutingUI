@@ -94,7 +94,7 @@ public class Network {
             }
         } while (two == null);
 
-        estimateRoute(one, two).print();
+        estimateRoute(one, two, 100).print();
     }
 
     private void exploreNetwork(Device device, Device[] selectedDevices) {
@@ -118,7 +118,7 @@ public class Network {
                 }
                 else {
                     selectedDevices[1] = routes[input*-1 - 1].getNextDevice(device);
-                    estimateRoute(selectedDevices[0], selectedDevices[1]).print();
+                    estimateRoute(selectedDevices[0], selectedDevices[1], 100).print();
                 }
             }
             else {
@@ -130,7 +130,7 @@ public class Network {
         }
     }
 
-    public RoutesFound estimateRoute(Device sendingDevice, Device receivingDevice) {
+    public RoutesFound estimateRoute(Device sendingDevice, Device receivingDevice, int maxHops) {
         final int totalEstimatedRoute = 100;
         RoutesFound routesFound = new RoutesFound(totalEstimatedRoute);
 
@@ -141,7 +141,7 @@ public class Network {
         }
         else {
             do {
-                routesFound.addFoundRoute(new EstimatedRoute(sendingDevice, receivingDevice, this, routesFound.getRoutesToAvoid()));
+                routesFound.addFoundRoute(new EstimatedRoute(sendingDevice, receivingDevice, this, routesFound.getRoutesToAvoid(), maxHops));
             } while(routesFound.getLast().validRoute());
         }
 

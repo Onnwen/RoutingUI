@@ -2,27 +2,27 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="750.0" prefWidth="1150.0" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.routingui.HelloController">
+<VBox alignment="CENTER" prefHeight="750.0" prefWidth="1150.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.routingui.HelloController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
    <GridPane hgap="10.0" prefHeight="300.0" prefWidth="855.0">
      <columnConstraints>
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
-       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="66.0" prefWidth="100.0" />
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="67.0" prefWidth="100.0" />
      </columnConstraints>
      <rowConstraints>
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -45,7 +45,7 @@
                      <Insets bottom="2.0" />
                   </VBox.margin>
                </Label>
-               <ListView fx:id="networkDevicesListView" onEditCommit="#updateNetworkDevicesList" VBox.vgrow="ALWAYS" />
+               <ListView fx:id="networkDevicesListView" onEditCommit="#updateNetworkDevicesList" prefHeight="279.0" prefWidth="741.0" VBox.vgrow="ALWAYS" />
             </children>
          </VBox>
       </children>
@@ -53,7 +53,8 @@
    <GridPane hgap="10.0" prefHeight="68.0" prefWidth="849.0" vgap="5.0">
      <columnConstraints>
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
-       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
      </columnConstraints>
      <rowConstraints>
@@ -61,15 +62,26 @@
        <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-         <ComboBox fx:id="startingDevice" prefHeight="31.0" prefWidth="398.0" promptText="Partenza" />
-         <ComboBox fx:id="endingDevice" prefHeight="30.0" prefWidth="485.0" promptText="Arrivo" GridPane.rowIndex="1" />
-         <CheckBox disable="true" mnemonicParsing="false" text="Previlegia costo minore" GridPane.columnIndex="1" />
-         <Slider disable="true" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-         <Label disable="true" text="Salti massimi: 100" GridPane.columnIndex="2" />
-         <TextField disable="true" promptText="Costo considerato per ogni salto facoltativo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <ComboBox fx:id="startingDevice" onAction="#updateStatus" prefHeight="31.0" prefWidth="398.0" promptText="Partenza" />
+         <ComboBox fx:id="endingDevice" onAction="#updateStatus" prefHeight="30.0" prefWidth="485.0" promptText="Arrivo" GridPane.rowIndex="1" />
+         <TextField fx:id="maxCost" onKeyReleased="#updateStatus" prefHeight="44.0" prefWidth="270.0" promptText="Costo massimo" GridPane.columnIndex="2" />
+         <TextField fx:id="maxHops" onKeyReleased="#updateStatus" prefHeight="53.0" prefWidth="270.0" promptText="Salti massimi" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+         <TextField fx:id="consideredCostHops" onKeyReleased="#updateStatus" prefHeight="37.0" prefWidth="261.0" promptText="Costo maggiorato salti facoltativi" GridPane.columnIndex="3" />
+         <TextField fx:id="maxRoutes" onKeyReleased="#updateStatus" prefHeight="74.0" prefWidth="227.0" promptText="Percorsi totali massimi" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+         <HBox alignment="CENTER" prefHeight="31.0" prefWidth="268.0" spacing="10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <children>
+               <Circle fx:id="statusColor" fill="#ff1f1f" radius="6.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+               <Label fx:id="statusText" text="Non pronto" textFill="RED" />
+            </children>
+         </HBox>
+         <Text fx:id="messageText" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Selezionare i dispositivi di partenza e arrivo" textAlignment="CENTER" wrappingWidth="168.93280029296875" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <font>
+               <Font name="System Italic" size="13.0" />
+            </font>
+         </Text>
       </children>
    </GridPane>
- <Button fx:id="estimateRouteButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#estimateRoute" prefHeight="40.0" prefWidth="1164.0" text="Calcola percorso">
+ <Button fx:id="estimateRouteButton" alignment="CENTER" contentDisplay="TOP" disable="true" mnemonicParsing="false" onAction="#estimateRoute" prefHeight="40.0" prefWidth="1164.0" text="Calcola percorso">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>

@@ -11,7 +11,7 @@ class ProjectTest {
     @Test
     void testEstimateRoute() {
         Network net = FileManagment.loadNetwork("routes1-small.csv");
-        net.estimateRoute(net.getDevices()[3], net.getDevices()[7]).print();
+        net.estimateRoute(net.getDevices()[3], net.getDevices()[7], 100).print();
     }
 
     @Test
