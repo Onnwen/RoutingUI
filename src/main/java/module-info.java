@@ -1,4 +1,4 @@
-module com.example.routingui {
+module com.onnwencassitto.routingui {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -10,7 +10,8 @@ module com.example.routingui {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires junit;
+    requires java.logging;
 
-    opens com.example.routingui to javafx.fxml;
-    exports com.example.routingui;
+    opens com.onnwencassitto.routingui to javafx.fxml;
+    exports com.onnwencassitto.routingui;
 }
